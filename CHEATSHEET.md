@@ -52,7 +52,7 @@ SELECT name, salary FROM employees WHERE salary > 80000 ORDER BY salary DESC;
 ```sql
 SELECT name, salary FROM employees ORDER BY salary DESC LIMIT 3;
 -- Top 3 salaries: Alice / Bob / Carol
--- LIMIT works in MySQL / PostgreSQL / SQLite; SQL Server uses TOP 3, Oracle uses FETCH FIRST 3 ROWS ONLY
+-- LIMIT works in MySQL / PostgreSQL / SQLite; SQL Server uses TOP 3, the SQL:2008 spelling FETCH FIRST 3 ROWS ONLY works in Oracle and PostgreSQL 10+
 ```
 🏷️ `#query` `#sorting` `#pagination`
 ### `DISTINCT` — deduplicate
@@ -148,7 +148,7 @@ SELECT d.name AS dept, COUNT(o.id) AS order_count, SUM(o.amount) AS revenue
 FROM departments d
 JOIN employees e ON e.dept_id = d.id
 JOIN orders o ON o.emp_id = e.id
-GROUP BY d.name;
+GROUP BY d.id, d.name;
 -- Engineering: 3 orders, 2370.50; Sales: 4 orders, 1650.74; HR has no orders and doesn't appear (INNER JOIN)
 ```
 🏷️ `#join` `#aggregation` `#real-world`
@@ -235,7 +235,7 @@ COMMIT;
 INSERT INTO departments (id, name) VALUES (3, 'People')
 ON CONFLICT(id) DO UPDATE SET name = excluded.name;
 -- id=3 already exists → the department is renamed HR → People; if it didn't exist, it would be inserted
--- This is the SQLite / PostgreSQL spelling; MySQL uses INSERT ... ON DUPLICATE KEY UPDATE name = VALUES(name)
+-- This is the SQLite / PostgreSQL spelling. MySQL: ON DUPLICATE KEY UPDATE name = VALUES(name) — but VALUES() is deprecated since MySQL 8.0.20; modern spelling uses a row alias: ... VALUES (3, 'People') AS new ON DUPLICATE KEY UPDATE name = new.name
 ```
 🏷️ `#writes` `#dialects`
 
@@ -249,6 +249,7 @@ CREATE TABLE projects (
   lead_id INTEGER REFERENCES employees(id)
 );
 -- Primary keys, NOT NULL and foreign keys belong in the schema, not in application code
+-- SQLite note: foreign keys are parsed but NOT enforced unless you run PRAGMA foreign_keys = ON
 -- Dialect: INTEGER PRIMARY KEY is SQLite's auto-incrementing row id;
 --          MySQL writes INT AUTO_INCREMENT PRIMARY KEY;
 --          PostgreSQL writes INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY (or the older SERIAL)
@@ -271,6 +272,7 @@ CREATE INDEX idx_employees_dept ON employees(dept_id);
 ### `DROP` — remove an index or a table
 ```sql
 DROP INDEX idx_employees_dept;
+-- MySQL spelling: DROP INDEX idx_employees_dept ON employees;
 DROP TABLE projects;
 -- ⚠️ Irreversible. Check for foreign keys pointing at the table first, and back up before you run it in production
 ```

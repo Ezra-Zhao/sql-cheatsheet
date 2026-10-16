@@ -186,7 +186,7 @@ SELECT d.name AS dept, COUNT(o.id) AS order_count, SUM(o.amount) AS revenue
 FROM departments d
 JOIN employees e ON e.dept_id = d.id
 JOIN orders o ON o.emp_id = e.id
-GROUP BY d.name;
+GROUP BY d.id, d.name;
 -- Engineering：3 单 2370.50；Sales：4 单 1650.74；HR 没人下单，不出现（INNER JOIN）
 ```
 🏷️ `#JOIN` `#聚合` `#实战`
@@ -319,6 +319,7 @@ CREATE INDEX idx_employees_dept ON employees(dept_id);
 ### `DROP` — 删除索引与表
 ```sql
 DROP INDEX idx_employees_dept;
+-- MySQL spelling: DROP INDEX idx_employees_dept ON employees;
 DROP TABLE projects;
 -- ⚠️ 不可恢复。上生产前先确认没有别的表外键引用它，先备份再动手
 ```

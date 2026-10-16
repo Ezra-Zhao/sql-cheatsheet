@@ -186,7 +186,7 @@ SELECT d.name AS dept, COUNT(o.id) AS order_count, SUM(o.amount) AS revenue
 FROM departments d
 JOIN employees e ON e.dept_id = d.id
 JOIN orders o ON o.emp_id = e.id
-GROUP BY d.name;
+GROUP BY d.id, d.name;
 -- Engineering: 3 pedidos, 2370.50; Sales: 4 pedidos, 1650.74; HR no tiene pedidos y no aparece (INNER JOIN)
 ```
 🏷️ `#JOIN` `#agregación` `#práctica`
@@ -320,6 +320,7 @@ CREATE INDEX idx_employees_dept ON employees(dept_id);
 ### `DROP` — elimina un índice o una tabla
 ```sql
 DROP INDEX idx_employees_dept;
+-- MySQL spelling: DROP INDEX idx_employees_dept ON employees;
 DROP TABLE projects;
 -- ⚠️ Irreversible. Revisa antes que ninguna clave foránea apunte a la tabla y haz copia de seguridad en producción
 ```
