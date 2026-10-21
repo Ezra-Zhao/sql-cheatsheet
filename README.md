@@ -2,6 +2,9 @@
 
 [![Stars](https://img.shields.io/github/stars/Ezra-Zhao/sql-cheatsheet?style=social)](https://github.com/Ezra-Zhao/sql-cheatsheet/stargazers) [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE) ![Languages](https://img.shields.io/badge/languages-3-blue)
 
+Support & more: [GitHub Sponsors](https://github.com/sponsors/Ezra-Zhao) · [Gumroad — templates & workbooks I use](https://ezraflow28.gumroad.com) · [Ko-fi](https://ko-fi.com/ezra777zhao)
+
+
 > 🌍 [Español](README.es.md) · [Português](README.pt.md)
 
 一份**一页纸**的 SQL 速查表：30 条高频查询与操作，通用标准 SQL 写法，覆盖查询、聚合、JOIN、子查询/CTE、增删改与事务、索引与表结构。每个条目只讲三件事——**它是干什么的、一条能直接复制粘贴的 SQL、适用场景标签**。**全部 30 条已在 SQLite 3.45 上逐条真实执行验证**（连每条的结果都对过），MySQL / PostgreSQL 的方言差异在条目里逐条标注，不编造不存在的函数。
